@@ -1,0 +1,143 @@
+[gd_scene load_steps=11 format=3 uid="uid://c10ri742oyps2"]
+
+[ext_resource type="Texture2D" uid="uid://jw76rjsq053n" path="res://assets/pozadi.png" id="1_kh1v0"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="2_1d2u5"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="3_0iimk"]
+[ext_resource type="Script" path="res://scenes/pinkatko.gd" id="4_ea4dr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hr7jb"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxmor"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abvmh"]
+size = Vector2(1151.67, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u85k2"]
+size = Vector2(1151.67, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27edv"]
+size = Vector2(10, 648.333)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1msb"]
+size = Vector2(15, 648.333)
+
+[node name="Main" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_kh1v0")
+centered = false
+script = ExtResource("2_1d2u5")
+
+[node name="Player" type="StaticBody2D" parent="."]
+position = Vector2(50, 324)
+script = ExtResource("3_0iimk")
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(10, -1.58946e-06)
+shape = SubResource("RectangleShape2D_hr7jb")
+
+[node name="AI" type="StaticBody2D" parent="."]
+position = Vector2(1082, 324)
+
+[node name="ColorRect" type="ColorRect" parent="AI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AI"]
+position = Vector2(10, -1.58946e-06)
+shape = SubResource("RectangleShape2D_hr7jb")
+
+[node name="Pinkatko" type="CharacterBody2D" parent="."]
+position = Vector2(576, 324)
+collision_mask = 3
+script = ExtResource("4_ea4dr")
+
+[node name="ColorRect" type="ColorRect" parent="Pinkatko"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pinkatko"]
+shape = SubResource("RectangleShape2D_mxmor")
+
+[node name="Borders" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Top" type="CollisionShape2D" parent="Borders"]
+position = Vector2(575.833, -15)
+shape = SubResource("RectangleShape2D_abvmh")
+
+[node name="Bot" type="CollisionShape2D" parent="Borders"]
+position = Vector2(575.833, 665.833)
+shape = SubResource("RectangleShape2D_u85k2")
+
+[node name="ScorePlayer" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScorePlayer"]
+position = Vector2(-5, 324.167)
+shape = SubResource("RectangleShape2D_27edv")
+
+[node name="ScoreAI" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreAI"]
+position = Vector2(1159.17, 324.167)
+shape = SubResource("RectangleShape2D_j1msb")
+
+[node name="SCORE" type="CanvasLayer" parent="."]
+
+[node name="PlayerScore" type="Label" parent="SCORE"]
+offset_left = 511.0
+offset_top = 14.0
+offset_right = 561.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 40
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AIScore" type="Label" parent="SCORE"]
+custom_minimum_size = Vector2(50, 70)
+offset_left = 592.0
+offset_top = 14.0
+offset_right = 642.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 40
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PinkatkoTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 571.0
+offset_right = 581.0
+offset_bottom = 648.0
