@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c10ri742oyps2"]
+[gd_scene load_steps=13 format=3 uid="uid://c10ri742oyps2"]
 
-[ext_resource type="Texture2D" uid="uid://jw76rjsq053n" path="res://assets/pozadi.png" id="1_kh1v0"]
+[ext_resource type="Texture2D" uid="uid://scjr3hg2q3ce" path="res://assets/background.png" id="1_eisau"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="2_1d2u5"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="3_0iimk"]
 [ext_resource type="Script" path="res://scenes/pinkatko.gd" id="4_ea4dr"]
@@ -19,14 +19,17 @@ size = Vector2(1151.67, 30)
 size = Vector2(1151.67, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_27edv"]
-size = Vector2(10, 648.333)
+size = Vector2(10, 713)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j1msb"]
-size = Vector2(15, 648.333)
+size = Vector2(15, 713)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mxcb"]
+bg_color = Color(0.0605303, 0.0605304, 0.0605303, 1)
 
 [node name="Main" type="Sprite2D"]
 texture_filter = 1
-texture = ExtResource("1_kh1v0")
+texture = ExtResource("1_eisau")
 centered = false
 script = ExtResource("2_1d2u5")
 
@@ -101,13 +104,13 @@ shape = SubResource("RectangleShape2D_u85k2")
 [node name="ScorePlayer" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScorePlayer"]
-position = Vector2(-5, 324.167)
+position = Vector2(-5, 326.5)
 shape = SubResource("RectangleShape2D_27edv")
 
 [node name="ScoreAI" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreAI"]
-position = Vector2(1159.17, 324.167)
+position = Vector2(1159.17, 326.5)
 shape = SubResource("RectangleShape2D_j1msb")
 
 [node name="SCORE" type="CanvasLayer" parent="."]
@@ -137,13 +140,82 @@ vertical_alignment = 1
 
 [node name="PinkatkoTimer" type="Timer" parent="."]
 one_shot = true
-autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 571.0
 offset_right = 581.0
 offset_bottom = 648.0
 
+[node name="GameMenu" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="GameMenu"]
+clip_contents = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -150.56
+offset_right = 362.5
+offset_bottom = 149.44
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1mxcb")
+
+[node name="Label" type="Label" parent="GameMenu/Panel"]
+layout_mode = 0
+offset_left = 229.5
+offset_top = 15.0
+offset_right = 496.5
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 39
+text = "Pong game"
+horizontal_alignment = 1
+
+[node name="Start_resume" type="Button" parent="GameMenu/Panel"]
+layout_mode = 0
+offset_left = 426.315
+offset_top = 177.0
+offset_right = 626.315
+offset_bottom = 227.0
+text = "Start game"
+
+[node name="OptionButton" type="OptionButton" parent="GameMenu/Panel"]
+layout_mode = 0
+offset_left = 377.5
+offset_top = 101.0
+offset_right = 596.5
+offset_bottom = 145.0
+selected = 1
+item_count = 4
+popup/item_0/text = "Casual"
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+popup/item_3/text = "Insane"
+popup/item_3/id = 3
+
+[node name="Label2" type="Label" parent="GameMenu/Panel"]
+offset_left = 156.5
+offset_top = 102.0
+offset_right = 322.5
+offset_bottom = 144.0
+text = "Difficulty"
+vertical_alignment = 1
+
+[node name="Reset" type="Button" parent="GameMenu/Panel"]
+offset_left = 93.455
+offset_top = 176.56
+offset_right = 293.455
+offset_bottom = 226.56
+disabled = true
+text = "Reset"
+
 [connection signal="body_entered" from="ScorePlayer" to="." method="_on_score_player_body_entered"]
 [connection signal="body_entered" from="ScoreAI" to="." method="_on_score_ai_body_entered"]
 [connection signal="timeout" from="PinkatkoTimer" to="." method="_on_pinkatko_timer_timeout"]
+[connection signal="pressed" from="GameMenu/Panel/Start_resume" to="." method="_on_start_resume_pressed"]
+[connection signal="item_selected" from="GameMenu/Panel/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="GameMenu/Panel/Reset" to="." method="_on_reset_pressed"]
