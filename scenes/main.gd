@@ -2,17 +2,21 @@ extends Sprite2D
 
 var window_size : Vector2
 var score := [0, 0] # player [0] and AI [1] score
-const MOVE_SPEED : int = 500
+const MOVE_SPEED : int = 500 # move speed of player and AI
 const AI_DIFFICULTY := [0.10, 0.40, 0.70, 1.0]
-var current_difficulty : float
-var playing : bool = false
+var current_difficulty : float # selected difficulty
+var playing : bool = false # if we're playing
 var menu_opened : bool = true
+var sound_player : AudioStreamPlayer
+var scored = load("res://assets/crash.mp3")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	window_size = get_viewport_rect().size
 	current_difficulty = AI_DIFFICULTY[1]
-	pass # Replace with function body.
+	
+	sound_player = AudioStreamPlayer.new()
+	add_child(sound_player)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,12 +42,18 @@ func _on_pinkatko_timer_timeout() -> void:
 
 func _on_score_player_body_entered(body: Node2D) -> void:
 	# AI has points
+	sound_player.stream = scored
+	sound_player.play()
+	
 	score[1] += 1
 	$SCORE/AIScore.text = str(score[1])
 	$PinkatkoTimer.start()
 
 func _on_score_ai_body_entered(body: Node2D) -> void:
 	# Player has points
+	sound_player.stream = scored
+	sound_player.play()
+	
 	score[0] += 1
 	$SCORE/PlayerScore.text = str(score[0])
 	$PinkatkoTimer.start()

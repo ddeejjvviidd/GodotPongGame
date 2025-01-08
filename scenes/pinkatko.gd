@@ -7,6 +7,8 @@ var speed: int # current speed of the ball
 var direction : Vector2 # ball direction
 const MAX_Y_VECTOR : float = 0.75 # maximum platform bounce vector
 
+var bounce = load("res://assets/bounce.mp3")
+
 
 func _ready() -> void:
 	window_size = get_viewport_rect().size
@@ -39,6 +41,9 @@ func _physics_process(delta: float) -> void:
 			collider = collision.get_collider()
 			
 			if collider == $"../Player" or collider == $"../AI":
+				get_parent().sound_player.stream = bounce
+				get_parent().sound_player.play()
+				
 				# collission was with players or AI platform
 				speed += ACCELERATION
 				direction = new_direction(collider)
