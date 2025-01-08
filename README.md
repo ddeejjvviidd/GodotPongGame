@@ -10,8 +10,8 @@ This game was developed using **Godot Engine**, no installation of Godot is requ
 
 1. Download the project.
 2. Navigate to the `builds/` folder.
-3. For Windows, run the `pong_game.exe` file.
-4. For Linux, run the `pong_game.sh` script.
+3. For Windows, run the `Pong.exe` file.
+4. For Linux, run the `Pong.sh` script.
 
 ## Features
 
